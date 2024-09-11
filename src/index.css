@@ -75,3 +75,19 @@
     background-color: hsl(var(--background));
   }
 }
+
+.dark .dark {
+  opacity: 1;
+}
+
+.dark .light {
+  opacity: 0;
+}
+
+.light .dark {
+  opacity: 0;
+}
+
+.light .light {
+  opacity: 1;
+}
