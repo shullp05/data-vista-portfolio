@@ -3,72 +3,18 @@ import Footer from '../components/Footer';
 import { useTheme } from '../components/ThemeProvider';
 import { Button } from "@/components/ui/button";
 import ProjectCard from '../components/ProjectCard';
+import D3Visualization from '../components/D3Visualization';
 import anime from 'animejs/lib/anime.es.js';
 
 const projects = [
+  // ... (previous project objects)
   {
-    title: "Sales Dashboard",
-    description: "Interactive Power BI dashboard showcasing sales trends and KPIs.",
-    image: "/images/sales-dashboard.jpg",
-    link: "#",
-    category: "Power BI"
-  },
-  {
-    title: "Customer Segmentation",
-    description: "Tableau visualization of customer segments based on purchasing behavior.",
-    image: "/images/customer-segmentation.jpg",
-    link: "#",
-    category: "Tableau"
-  },
-  {
-    title: "COVID-19 Data Tracker",
-    description: "Real-time D3.js visualization of global COVID-19 statistics.",
-    image: "/images/covid-tracker.jpg",
-    link: "#",
+    title: "Advanced D3.js Financial Dashboard",
+    description: "Interactive D3.js visualization showcasing financial data trends with advanced animations and responsive design.",
+    image: "/images/d3-financial-dashboard.jpg",
+    link: "#d3-visualization",
     category: "D3.js"
   },
-  {
-    title: "Stock Market Analysis",
-    description: "Interactive dashboard for analyzing stock market trends and predictions.",
-    image: "/images/stock-market.jpg",
-    link: "#",
-    category: "Power BI"
-  },
-  {
-    title: "Social Media Analytics",
-    description: "Comprehensive visualization of social media engagement and sentiment analysis.",
-    image: "/images/social-media-analytics.jpg",
-    link: "#",
-    category: "Tableau"
-  },
-  {
-    title: "Climate Change Visualization",
-    description: "Interactive globe showing climate change impacts over time.",
-    image: "/images/climate-change.jpg",
-    link: "#",
-    category: "D3.js"
-  },
-  {
-    title: "E-commerce Performance Dashboard",
-    description: "Comprehensive Power BI dashboard tracking key e-commerce metrics and user behavior.",
-    image: "/images/ecommerce-dashboard.jpg",
-    link: "#",
-    category: "Power BI"
-  },
-  {
-    title: "Supply Chain Optimization",
-    description: "Tableau visualization for optimizing supply chain processes and identifying bottlenecks.",
-    image: "/images/supply-chain.jpg",
-    link: "#",
-    category: "Tableau"
-  },
-  {
-    title: "Interactive Data Explorer",
-    description: "D3.js-powered tool for exploring and visualizing complex datasets with multiple dimensions.",
-    image: "/images/data-explorer.jpg",
-    link: "#",
-    category: "D3.js"
-  }
 ];
 
 const categories = ["All", "Power BI", "Tableau", "D3.js"];
@@ -83,7 +29,6 @@ const Projects = () => {
       ? projects 
       : projects.filter(project => project.category === filter));
     
-    // Animate new projects
     anime({
       targets: '.project-card',
       opacity: [0, 1],
@@ -116,6 +61,11 @@ const Projects = () => {
           {filteredProjects.map((project, index) => (
             <ProjectCard key={index} project={project} isDarkMode={isDarkMode} />
           ))}
+        </div>
+
+        <div id="d3-visualization" className="mt-16">
+          <h2 className="text-3xl font-bold mb-8">Advanced D3.js Financial Dashboard</h2>
+          <D3Visualization isDarkMode={isDarkMode} />
         </div>
       </main>
       <Footer />
