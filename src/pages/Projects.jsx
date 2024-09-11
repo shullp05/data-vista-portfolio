@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Footer from '../components/Footer';
 import { useTheme } from '../components/ThemeProvider';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import ProjectCard from '../components/ProjectCard';
+import anime from 'animejs/lib/anime.es.js';
 
 const projects = [
   {
@@ -46,6 +47,27 @@ const projects = [
     image: "/images/climate-change.jpg",
     link: "#",
     category: "D3.js"
+  },
+  {
+    title: "E-commerce Performance Dashboard",
+    description: "Comprehensive Power BI dashboard tracking key e-commerce metrics and user behavior.",
+    image: "/images/ecommerce-dashboard.jpg",
+    link: "#",
+    category: "Power BI"
+  },
+  {
+    title: "Supply Chain Optimization",
+    description: "Tableau visualization for optimizing supply chain processes and identifying bottlenecks.",
+    image: "/images/supply-chain.jpg",
+    link: "#",
+    category: "Tableau"
+  },
+  {
+    title: "Interactive Data Explorer",
+    description: "D3.js-powered tool for exploring and visualizing complex datasets with multiple dimensions.",
+    image: "/images/data-explorer.jpg",
+    link: "#",
+    category: "D3.js"
   }
 ];
 
@@ -54,10 +76,23 @@ const categories = ["All", "Power BI", "Tableau", "D3.js"];
 const Projects = () => {
   const { isDarkMode } = useTheme();
   const [filter, setFilter] = useState("All");
+  const [filteredProjects, setFilteredProjects] = useState(projects);
 
-  const filteredProjects = filter === "All" 
-    ? projects 
-    : projects.filter(project => project.category === filter);
+  useEffect(() => {
+    setFilteredProjects(filter === "All" 
+      ? projects 
+      : projects.filter(project => project.category === filter));
+    
+    // Animate new projects
+    anime({
+      targets: '.project-card',
+      opacity: [0, 1],
+      translateY: [50, 0],
+      delay: anime.stagger(100),
+      easing: 'easeOutQuad',
+      duration: 500
+    });
+  }, [filter]);
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'}`}>
@@ -70,7 +105,7 @@ const Projects = () => {
               key={category}
               onClick={() => setFilter(category)}
               variant={filter === category ? "default" : "outline"}
-              className={`${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-200'}`}
+              className={`${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-200'} transition-colors duration-300`}
             >
               {category}
             </Button>
@@ -79,23 +114,7 @@ const Projects = () => {
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {filteredProjects.map((project, index) => (
-            <Card key={index} className={`overflow-hidden ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white'}`}>
-              <img src={project.image} alt={project.title} className="w-full h-48 object-cover" />
-              <CardHeader>
-                <CardTitle>{project.title}</CardTitle>
-                <CardDescription className={isDarkMode ? 'text-gray-300' : 'text-gray-600'}>
-                  {project.category}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{project.description}</p>
-              </CardContent>
-              <CardFooter>
-                <Button asChild variant="link" className={isDarkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-800'}>
-                  <a href={project.link}>View Project →</a>
-                </Button>
-              </CardFooter>
-            </Card>
+            <ProjectCard key={index} project={project} isDarkMode={isDarkMode} />
           ))}
         </div>
       </main>
