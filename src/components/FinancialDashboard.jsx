@@ -4,6 +4,7 @@ import D3BarChart from './D3BarChart';
 import D3PieChart from './D3PieChart';
 import { useTheme } from './ThemeProvider';
 import { ArrowUpIcon, ArrowDownIcon, DollarSignIcon, UsersIcon, PercentIcon, TrendingUpIcon } from 'lucide-react';
+import { LineChart, Line, ResponsiveContainer } from 'recharts';
 
 const FinancialDashboard = () => {
   const { isDarkMode } = useTheme();
@@ -59,6 +60,14 @@ const FinancialDashboard = () => {
       status: "up",
       statusValue: "8%",
       description: "Higher than last month",
+      historicalData: [
+        { date: '2023-01-01', value: 15000 },
+        { date: '2023-02-01', value: 16000 },
+        { date: '2023-03-01', value: 17500 },
+        { date: '2023-04-01', value: 18200 },
+        { date: '2023-05-01', value: 19000 },
+        { date: '2023-06-01', value: 19600 },
+      ],
     },
     {
       title: "Average Order Value",
@@ -67,6 +76,14 @@ const FinancialDashboard = () => {
       status: "up",
       statusValue: "5%",
       description: "Increased customer spending",
+      historicalData: [
+        { date: '2023-01-01', value: 220 },
+        { date: '2023-02-01', value: 225 },
+        { date: '2023-03-01', value: 230 },
+        { date: '2023-04-01', value: 235 },
+        { date: '2023-05-01', value: 240 },
+        { date: '2023-06-01', value: 245 },
+      ],
     },
     {
       title: "Conversion Rate",
@@ -75,6 +92,14 @@ const FinancialDashboard = () => {
       status: "down",
       statusValue: "0.5%",
       description: "Slight decrease, needs attention",
+      historicalData: [
+        { date: '2023-01-01', value: 3.8 },
+        { date: '2023-02-01', value: 3.7 },
+        { date: '2023-03-01', value: 3.5 },
+        { date: '2023-04-01', value: 3.4 },
+        { date: '2023-05-01', value: 3.3 },
+        { date: '2023-06-01', value: 3.2 },
+      ],
     },
     {
       title: "Customer Acquisition Cost",
@@ -83,6 +108,14 @@ const FinancialDashboard = () => {
       status: "down",
       statusValue: "10%",
       description: "Improved efficiency in marketing",
+      historicalData: [
+        { date: '2023-01-01', value: 60 },
+        { date: '2023-02-01', value: 58 },
+        { date: '2023-03-01', value: 55 },
+        { date: '2023-04-01', value: 53 },
+        { date: '2023-05-01', value: 51 },
+        { date: '2023-06-01', value: 50 },
+      ],
     },
   ];
 
@@ -137,6 +170,13 @@ const FinancialDashboard = () => {
                   </div>
                 </div>
                 <p className="text-xs mt-1 text-gray-500 dark:text-gray-400">{metric.description}</p>
+                <div className="mt-2 h-16">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={metric.historicalData}>
+                      <Line type="monotone" dataKey="value" stroke={metric.status === 'up' ? '#10B981' : '#EF4444'} strokeWidth={2} dot={false} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
               </div>
             ))}
           </div>
