@@ -5,7 +5,7 @@ const D3BarChart = ({ data, width, height, margin, isDarkMode }) => {
   const svgRef = useRef();
 
   useEffect(() => {
-    if (!data || data.length === 0) return;
+    if (!data || data.length === 0 || !width || !height) return;
 
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove();

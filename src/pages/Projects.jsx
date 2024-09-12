@@ -35,6 +35,7 @@ const Projects = () => {
   const [filter, setFilter] = useState("All");
   const [filteredProjects, setFilteredProjects] = useState(projects);
   const [showDashboard, setShowDashboard] = useState(false);
+  const [modalDimensions, setModalDimensions] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
     setFilteredProjects(filter === "All" 
@@ -50,6 +51,20 @@ const Projects = () => {
       duration: 500
     });
   }, [filter]);
+
+  useEffect(() => {
+    const updateModalDimensions = () => {
+      setModalDimensions({
+        width: window.innerWidth * 0.8,
+        height: window.innerHeight * 0.8,
+      });
+    };
+
+    updateModalDimensions();
+    window.addEventListener('resize', updateModalDimensions);
+
+    return () => window.removeEventListener('resize', updateModalDimensions);
+  }, []);
 
   const handleViewProject = (project) => {
     if (project.title === "Advanced D3.js Financial Dashboard") {
@@ -88,7 +103,10 @@ const Projects = () => {
 
         {showDashboard && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-            <div className={`w-full max-w-4xl max-h-full overflow-auto rounded-lg ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
+            <div 
+              className={`w-full h-full max-w-[80vw] max-h-[80vh] overflow-auto rounded-lg ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}
+              style={{ width: modalDimensions.width, height: modalDimensions.height }}
+            >
               <div className="sticky top-0 flex justify-end p-4">
                 <Button onClick={() => setShowDashboard(false)}>Close</Button>
               </div>
