@@ -5,14 +5,23 @@ const D3Visualization = ({ isDarkMode }) => {
   const svgRef = useRef();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch('https://raw.githubusercontent.com/your-username/your-repo/main/financial_data.csv');
-      const csvData = await response.text();
-      const data = d3.csvParse(csvData);
-      createVisualization(data);
-    };
+    // Mock data
+    const mockData = [
+      { date: '2023-01-01', value: 100 },
+      { date: '2023-02-01', value: 120 },
+      { date: '2023-03-01', value: 110 },
+      { date: '2023-04-01', value: 140 },
+      { date: '2023-05-01', value: 130 },
+      { date: '2023-06-01', value: 160 },
+      { date: '2023-07-01', value: 180 },
+      { date: '2023-08-01', value: 170 },
+      { date: '2023-09-01', value: 200 },
+      { date: '2023-10-01', value: 190 },
+      { date: '2023-11-01', value: 220 },
+      { date: '2023-12-01', value: 240 },
+    ];
 
-    fetchData();
+    createVisualization(mockData);
   }, [isDarkMode]);
 
   const createVisualization = (data) => {
