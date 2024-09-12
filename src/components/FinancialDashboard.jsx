@@ -3,6 +3,7 @@ import D3LineChart from './D3LineChart';
 import D3BarChart from './D3BarChart';
 import D3PieChart from './D3PieChart';
 import { useTheme } from './ThemeProvider';
+import { ArrowUpIcon, ArrowDownIcon, DollarSignIcon, UsersIcon, PercentIcon, TrendingUpIcon } from 'lucide-react';
 
 const FinancialDashboard = () => {
   const { isDarkMode } = useTheme();
@@ -50,6 +51,41 @@ const FinancialDashboard = () => {
 
   const chartMargin = { top: 20, right: 30, bottom: 30, left: 40 };
 
+  const keyMetrics = [
+    {
+      title: "Total Revenue",
+      value: "$19,600",
+      icon: <DollarSignIcon className="h-6 w-6" />,
+      status: "up",
+      statusValue: "8%",
+      description: "Higher than last month",
+    },
+    {
+      title: "Average Order Value",
+      value: "$245",
+      icon: <TrendingUpIcon className="h-6 w-6" />,
+      status: "up",
+      statusValue: "5%",
+      description: "Increased customer spending",
+    },
+    {
+      title: "Conversion Rate",
+      value: "3.2%",
+      icon: <PercentIcon className="h-6 w-6" />,
+      status: "down",
+      statusValue: "0.5%",
+      description: "Slight decrease, needs attention",
+    },
+    {
+      title: "Customer Acquisition Cost",
+      value: "$50",
+      icon: <UsersIcon className="h-6 w-6" />,
+      status: "down",
+      statusValue: "10%",
+      description: "Improved efficiency in marketing",
+    },
+  ];
+
   return (
     <div ref={dashboardRef} className={`p-6 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} h-full`}>
       <h2 className="text-2xl font-bold mb-6">Advanced D3.js Financial Dashboard</h2>
@@ -84,25 +120,25 @@ const FinancialDashboard = () => {
             isDarkMode={isDarkMode}
           />
         </div>
-        <div className={`p-4 rounded-lg ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'} h-full`}>
-          <h3 className="text-xl font-semibold mb-2">Key Metrics</h3>
-          <div className="grid grid-cols-2 gap-4 h-full">
-            <div className={`p-4 rounded-lg ${isDarkMode ? 'bg-gray-600' : 'bg-white'} flex flex-col justify-center`}>
-              <p className="text-sm font-medium">Total Revenue</p>
-              <p className="text-2xl font-bold">$19,600</p>
-            </div>
-            <div className={`p-4 rounded-lg ${isDarkMode ? 'bg-gray-600' : 'bg-white'} flex flex-col justify-center`}>
-              <p className="text-sm font-medium">Average Order Value</p>
-              <p className="text-2xl font-bold">$245</p>
-            </div>
-            <div className={`p-4 rounded-lg ${isDarkMode ? 'bg-gray-600' : 'bg-white'} flex flex-col justify-center`}>
-              <p className="text-sm font-medium">Conversion Rate</p>
-              <p className="text-2xl font-bold">3.2%</p>
-            </div>
-            <div className={`p-4 rounded-lg ${isDarkMode ? 'bg-gray-600' : 'bg-white'} flex flex-col justify-center`}>
-              <p className="text-sm font-medium">Customer Acquisition Cost</p>
-              <p className="text-2xl font-bold">$50</p>
-            </div>
+        <div className={`p-4 rounded-lg ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'} h-full overflow-hidden`}>
+          <h3 className="text-xl font-semibold mb-4">Key Metrics</h3>
+          <div className="grid grid-cols-2 gap-4 h-[calc(100%-2rem)]">
+            {keyMetrics.map((metric, index) => (
+              <div key={index} className={`p-4 rounded-lg ${isDarkMode ? 'bg-gray-600' : 'bg-white'} flex flex-col justify-between`}>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm font-medium">{metric.title}</span>
+                  {metric.icon}
+                </div>
+                <div className="flex items-baseline">
+                  <p className="text-2xl font-bold mr-2">{metric.value}</p>
+                  <div className={`flex items-center ${metric.status === 'up' ? 'text-green-500' : 'text-red-500'}`}>
+                    {metric.status === 'up' ? <ArrowUpIcon className="h-4 w-4" /> : <ArrowDownIcon className="h-4 w-4" />}
+                    <span className="text-sm ml-1">{metric.statusValue}</span>
+                  </div>
+                </div>
+                <p className="text-xs mt-1 text-gray-500 dark:text-gray-400">{metric.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
