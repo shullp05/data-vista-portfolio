@@ -3,18 +3,29 @@ import Footer from '../components/Footer';
 import { useTheme } from '../components/ThemeProvider';
 import { Button } from "@/components/ui/button";
 import ProjectCard from '../components/ProjectCard';
-import D3Visualization from '../components/D3Visualization';
+import FinancialDashboard from '../components/FinancialDashboard';
 import anime from 'animejs/lib/anime.es.js';
 
 const projects = [
-  // ... (previous project objects)
+  {
+    title: "Sales Dashboard",
+    description: "Interactive Power BI dashboard showcasing sales trends and KPIs.",
+    image: "/images/sales-dashboard.jpg",
+    link: "#"
+  },
+  {
+    title: "Customer Segmentation",
+    description: "Tableau visualization of customer segments based on purchasing behavior.",
+    image: "/images/customer-segmentation.jpg",
+    link: "#"
+  },
   {
     title: "Advanced D3.js Financial Dashboard",
     description: "Interactive D3.js visualization showcasing financial data trends with advanced animations and responsive design.",
     image: "/images/d3-financial-dashboard.jpg",
-    link: "#d3-visualization",
+    link: "#financial-dashboard",
     category: "D3.js"
-  },
+  }
 ];
 
 const categories = ["All", "Power BI", "Tableau", "D3.js"];
@@ -23,6 +34,7 @@ const Projects = () => {
   const { isDarkMode } = useTheme();
   const [filter, setFilter] = useState("All");
   const [filteredProjects, setFilteredProjects] = useState(projects);
+  const [showDashboard, setShowDashboard] = useState(false);
 
   useEffect(() => {
     setFilteredProjects(filter === "All" 
@@ -38,6 +50,12 @@ const Projects = () => {
       duration: 500
     });
   }, [filter]);
+
+  const handleViewProject = (project) => {
+    if (project.title === "Advanced D3.js Financial Dashboard") {
+      setShowDashboard(true);
+    }
+  };
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'}`}>
@@ -59,14 +77,25 @@ const Projects = () => {
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {filteredProjects.map((project, index) => (
-            <ProjectCard key={index} project={project} isDarkMode={isDarkMode} />
+            <ProjectCard 
+              key={index} 
+              project={project} 
+              isDarkMode={isDarkMode} 
+              onViewProject={() => handleViewProject(project)}
+            />
           ))}
         </div>
 
-        <div id="d3-visualization" className="mt-16">
-          <h2 className="text-3xl font-bold mb-8">Advanced D3.js Financial Dashboard</h2>
-          <D3Visualization isDarkMode={isDarkMode} />
-        </div>
+        {showDashboard && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
+            <div className={`w-full max-w-4xl max-h-full overflow-auto rounded-lg ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
+              <div className="sticky top-0 flex justify-end p-4">
+                <Button onClick={() => setShowDashboard(false)}>Close</Button>
+              </div>
+              <FinancialDashboard />
+            </div>
+          </div>
+        )}
       </main>
       <Footer />
     </div>

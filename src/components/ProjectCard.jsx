@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button";
 import anime from 'animejs/lib/anime.es.js';
 
-const ProjectCard = ({ project, isDarkMode }) => {
+const ProjectCard = ({ project, isDarkMode, onViewProject }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -36,8 +36,8 @@ const ProjectCard = ({ project, isDarkMode }) => {
       <div className="relative overflow-hidden">
         <img src={project.image} alt={project.title} className="project-image w-full h-48 object-cover transition-transform duration-300" />
         <div className={`absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 transition-opacity duration-300 ${isHovered ? 'opacity-100' : ''}`}>
-          <Button asChild variant="secondary" className="transform translate-y-4 transition-transform duration-300">
-            <a href={project.link}>View Project</a>
+          <Button onClick={() => onViewProject(project)} variant="secondary" className="transform translate-y-4 transition-transform duration-300">
+            View Project
           </Button>
         </div>
       </div>
@@ -51,8 +51,8 @@ const ProjectCard = ({ project, isDarkMode }) => {
         <p className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} line-clamp-3`}>{project.description}</p>
       </CardContent>
       <CardFooter>
-        <Button asChild variant="link" className={`${isDarkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-800'} transition-colors duration-300`}>
-          <a href={project.link}>Learn More →</a>
+        <Button onClick={() => onViewProject(project)} variant="link" className={`${isDarkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-800'} transition-colors duration-300`}>
+          Learn More →
         </Button>
       </CardFooter>
     </Card>
