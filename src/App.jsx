@@ -49,3 +49,21 @@ const App = () => (
 );
 
 export default App;
+
+// Additional guidance:
+// 1. If you need to add global state management, consider wrapping the entire app with a context provider.
+// 2. For authentication, you might want to add a PrivateRoute component and use it for protected routes.
+// 3. To add error boundaries, create an ErrorBoundary component and wrap the main content with it.
+// 4. For internationalization, you can add a language provider from a library like react-i18next.
+// 
+// Example of adding a global context:
+// 
+// import { GlobalStateProvider } from './context/GlobalStateContext';
+// 
+// const App = () => (
+//   <GlobalStateProvider>
+//     <QueryClientProvider client={queryClient}>
+//       {/* ... existing code ... */}
+//     </QueryClientProvider>
+//   </GlobalStateProvider>
+// );
