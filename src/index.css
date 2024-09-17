@@ -51,7 +51,7 @@
  
 @layer base {
   * {
-    @apply border-border;
+    @apply custom-border;
   }
   body {
     @apply bg-background text-foreground;
@@ -60,7 +60,7 @@
 }
 
 @layer utilities {
-  .border-border {
+  .custom-border {
     border-color: hsl(var(--border));
   }
 }
